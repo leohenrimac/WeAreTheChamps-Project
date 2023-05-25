@@ -1,26 +1,22 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
 import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
-const appSettings = {
-    databaseURL: "https://endorsement-app-db70c-default-rtdb.firebaseio.com/"
-}
+//Initializing database
+const appSettings = {databaseURL: "https://endorsement-app-db70c-default-rtdb.firebaseio.com/"}
 const app = initializeApp(appSettings)
-
 const database = getDatabase(app)
-
 const endorsement = ref(database, "endorsement")
 
+//Fetching main DOM elements
 const inputField = document.getElementById("input-field")
 const toField = document.getElementById("input-to")
 const fromField = document.getElementById("input-from")
 const publishBtn = document.getElementById("publish-btn")
 const endorsementContainer = document.getElementById("endorsement-container")
 
-
-
+//
 let displayedCards = []
 let localUserID = getUserID()
-
 let userLikes = []
 const likesFromLocalStorage = JSON.parse(localStorage.getItem("userLikes"))
 getUserLikes()
@@ -43,7 +39,7 @@ publishBtn.addEventListener("click", function(){
 
         
     } else {
-        // window.alert("Fill out all the fields first!")
+        window.alert("Fill out all the fields first!")
     }
 })
 
@@ -59,7 +55,7 @@ onValue(endorsement, function(snapshot) {
             appendCard(currentCard)
             appendToDisplayCards(currentCard)
         }
-        
+
     } else {
         endorsementContainer.innerHTML= "No posts yet..."
     }
@@ -94,12 +90,18 @@ function appendCard(card) {
 
     let deleteBtn = document.createElement("button")
     deleteBtn.setAttribute("class", "delete-btn")
+    deleteBtn.setAttribute("id", `${currentCardUserID}`)
     deleteBtn.textContent = "－"
 
     let likeBtn = document.createElement("button")
     likeBtn.setAttribute("class", "like-btn")
     likeBtn.textContent = "🧡"
     
+    if (currentCardUserID == localUserID) {
+        deleteBtn.style.display = "inline-block"; 
+    } else {
+        deleteBtn.style.display = "none"; 
+    }
 
     cardFooterLike.append(likeBtn)
     cardHeading.append(deleteBtn)
@@ -108,7 +110,7 @@ function appendCard(card) {
     endorsementCard.append(cardBody)
     endorsementCard.append(cardFooter)
 
-    endorsementContainer.append(endorsementCard)
+    endorsementContainer.prepend(endorsementCard)
 
     deleteBtn.addEventListener("click", function() {
         deleteCard(currentCardUserID, currentCardID)
@@ -216,3 +218,9 @@ function clearDisplayCards() {
     displayedCards = []
 }
 
+function disableDeleteBtn(ID) {
+    let deleteBtnEl = document.getElementById(ID)
+    if(deleteBtnEl) {
+        deleteBtnEl.style.display = "inline-block"
+    }
+}

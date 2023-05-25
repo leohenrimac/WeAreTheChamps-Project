@@ -117,10 +117,22 @@ img {
 .delete-btn {
     width: 25px;
     height: 25px;
-
+    background: #324376;;
     border: none;
-    color: black;
+    color: white;
     text-align: center;
+   
+    
+}
+
+.delete-btn:hover {
+    background-color: #d37c01;
+    color: white;
+}
+
+.delete-btn:hover:active {
+    background-color: #f99202;
+    color: white;
 }
 
 .card-body {
@@ -140,11 +152,14 @@ img {
 }
 
 .like-btn {
-
+    text-align: center;
     width: 25px;
     height: 25px;
     border: none;
-    color: black;
-    background: none;
+    margin-left: 5px;
+   background: none;
 
+}
+.like-btn:hover {
+    text-shadow: 0px 0px 6px #d37c01;
 }
