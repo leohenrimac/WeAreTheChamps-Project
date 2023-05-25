@@ -140,11 +140,11 @@ img {
 }
 
 .like-btn {
+
     width: 25px;
     height: 25px;
-
     border: none;
     color: black;
+    background: none;
 
 }
-

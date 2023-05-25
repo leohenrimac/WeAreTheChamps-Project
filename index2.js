@@ -198,8 +198,7 @@ function addLike(cardID) {
         _currentLikeCount--
         _likeEl.textContent = _currentLikeCount
         update(_likeInDB, {Like: _currentLikeCount})
-        let index = userLikes.indexOf(`${cardID}`)
-        userLikes.splice(index, 1)
+        userLikes.pop(`${cardID}`)
         localStorage.setItem("userLikes", JSON.stringify(userLikes))
     }
 
